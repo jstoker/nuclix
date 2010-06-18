@@ -10,10 +10,10 @@ import traceback
 import os
 import re
 import socket
+import time
 
-# Import required Python functions.
+# Import required Python function.
 from collections import deque
-from time import time
 
 # Import required libnuclix modules.
 import logger
@@ -79,11 +79,18 @@ class UplinkConnection(asyncore.dispatcher):
         # Dispatch it.
         event.dispatch('OnRawSocketRead', datalines)
 
+        # Send it off to be reported.
+        self.report()
+
     def handle_write(self):
         '''Write the first line in the sendq to the socket.'''
 
         # Grab the first line from the sendq.
-        line = self.sendq[-1] + '\r\n'
+        try:
+            line = self.sendq[-1] + '\r\n'
+        except IndexError:
+            # This means there are no lines to send.
+            return
 
         # Try to send it.
         num_sent = self.send(line)
@@ -149,6 +156,15 @@ class UplinkConnection(asyncore.dispatcher):
         '''Nicer interface to push data onto the sendq stack.'''
 
         self.sendq.appendleft('%s' % text)
+
+    def report(self):
+        '''Report the recvq pops.'''
+
+        while len(self.recvq):
+            line = self.recvq.pop()
+            event.dispatch('OnReport', line)
+
+            logger.debug('conn.UplinkConnection().report(): %s -> %s' % (self.server['id'], self.server['address'], line))
 
 def init():
     '''Connect to the uplink.'''
