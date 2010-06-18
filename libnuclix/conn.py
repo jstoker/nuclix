@@ -145,6 +145,11 @@ class UplinkConnection(asyncore.dispatcher):
 
         shutdown(os.EX_SOFTWARE, 'asyncore failure')
 
+    def push(self, text):
+        '''Nicer interface to push data onto the sendq stack.'''
+
+        self.sendq.push('%s' % text)
+
 def init():
     '''Connect to the uplink.'''
 
