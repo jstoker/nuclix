@@ -153,14 +153,16 @@ class UplinkConnection(asyncore.dispatcher):
 def init():
     '''Connect to the uplink.'''
 
-    serv = { 'id'        : None,
-             'address'   : None,
-             'password'  : None,
-             'vhost'     : None,
-             'actual'    : None,
-             'port'      : 0,
-             'recontime' : 0,
-             'connected' : False }
+    serv = { 'id'            : None,
+             'address'       : None,
+             'password'      : None,
+             'vhost'         : None,
+             'actual'        : None,
+             'services_name' : None,
+             'services_desc' : None
+             'port'          : 0,
+             'recontime'     : 0,
+             'connected'     : False }
 
     try:
         serv['id'] = var.conf.get('uplink', 'id')[0]
@@ -172,6 +174,9 @@ def init():
 
         if var.conf.get('uplink', 'recontime')[0]:
             serv['recontime'] = int(var.conf.get('uplink', 'recontime')[0])
+
+        serv['services_name'] = var.conf.get('server', 'name')[0]
+        serv['services_desc'] = var.conf.get('server', 'desc')[0]
     except (conf.BlockNotFound, conf.VariableNotFound):
         shutdown(os.EX_CONFIG, 'uplink directives missing')
 
