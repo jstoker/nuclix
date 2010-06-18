@@ -173,17 +173,22 @@ def init():
     event.dispatch('OnUplinkRecognization', serv)
 
     logger.info('conn.init(): connecting to %s (%s:%d)' % (serv['id'], serv['address'], serv['port']))
-    uconn = UplinkConnection(serv)
+    var.conn = UplinkConnection(serv)
 
     event.dispatch('OnPreConnect', serv)
 
     # This step is low-level to permit IPv6.
     af, type, proto, canon, sa = socket.getaddrinfo(serv['address'], serv['port'], 0, 1)[0]
-    uconn.create_socket(af, type)
+    var.conn.create_socket(af, type)
 
     # If there's a vhost, bind to it.
     if serv['vhost']:
-        uconn.bind((serv['vhost'], 0))
+        var.conn.bind((serv['vhost'], 0))
 
     # Now connect to the uplink.
-    uconn.connect(sa)
+    var.conn.connect(sa)
+
+def disconnect(code, reason):
+    '''Disconnect from the uplink.'''
+
+    var.conn.shutdown(2)
