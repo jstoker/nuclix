@@ -21,6 +21,7 @@ import var
 import timer
 import protocol
 import conf
+import event
 
 # Import required libnuclix function.
 from libnuclix import shutdown
