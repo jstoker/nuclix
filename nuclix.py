@@ -6,10 +6,10 @@
 '''Main program. This is a caller to other functions in the core and some other basic routines.'''
 
 # Import required Python modules.
-import getopt, os, signal, sys
+import asyncore, getopt, os, signal, sys
 
 # Import required libnuclix modules.
-from libnuclix import var, logger, conn, module, conf
+from libnuclix import var, logger, conn, module, conf, timer
 
 # Import required libnuclix function.
 from libnuclix import shutdown
