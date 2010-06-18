@@ -33,4 +33,4 @@ def shutdown(code, reason):
     for i in var.servers:
         server.delete(i)
 
-    sys.exit(code)
+    exit(code)
