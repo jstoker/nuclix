@@ -86,7 +86,7 @@ class ConfigParser:
         try:
             conf_file = open(self.name, 'r')
         except IOError, e:
-            raise GeneralError('Error opening configuration file %s: %s' % (self.file, os.strerror(e.args[0])))
+            raise GeneralError('Error opening configuration file %s: %s' % (self.name, os.strerror(e.args[0])))
 
         # Parse.
         self.blocks = []
