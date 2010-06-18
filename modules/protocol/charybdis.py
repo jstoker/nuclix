@@ -21,14 +21,14 @@ def negotiate_link(conn):
     numeric = var.conf.get('uplink', 'numeric')[0]
 
     if not numeric:
-        conn.sendq.push('PASS %s :TS' % conn.server['password'])
+        conn.push('PASS %s :TS' % conn.server['password'])
     else:
         uses_uid = True
-        conn.sendq.push('PASS %s TS 6 :%s' % (conn.server['password'], numeric))
+        conn.push('PASS %s TS 6 :%s' % (conn.server['password'], numeric))
 
-    conn.sendq.push('CAPAB :QS EX IE KLN UNKLN ENCAP TB SERVICES EUID EOPMOD MLOCK')
-    conn.sendq.push('SERVER %s 1 :%s' % (conn.server['services_name'], conn.server['services_desc']))
-    conn.sendq.push('SVINFO %d 3 0 :%d' % ('6' if uses_uid else '5', time.time()))
+    conn.push('CAPAB :QS EX IE KLN UNKLN ENCAP TB SERVICES EUID EOPMOD MLOCK')
+    conn.push('SERVER %s 1 :%s' % (conn.server['services_name'], conn.server['services_desc']))
+    conn.push('SVINFO %d 3 0 :%d' % ('6' if uses_uid else '5', time.time()))
 
 def on_socket_read(conn, data):
     '''Read data read from the connection.'''
