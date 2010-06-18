@@ -10,6 +10,9 @@ from imp import load_source
 # Import required libnuclix module.
 import logger
 
+# Import required libnuclix function.
+from libnuclix import shutdown
+
 mod = None
 
 def negotiate_link(conn):
@@ -25,7 +28,7 @@ def load(name):
     global mod
 
     try:
-        mod = load_source(name, name)
+        mod = load_source(name.append('.py') name)
     except ImportError, e:
         shutdown(os.EX_SOFTWARE, 'protocol unable to load: %s' % e)
 
