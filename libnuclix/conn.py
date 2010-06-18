@@ -159,7 +159,7 @@ def init():
              'vhost'         : None,
              'actual'        : None,
              'services_name' : None,
-             'services_desc' : None
+             'services_desc' : None,
              'port'          : 0,
              'recontime'     : 0,
              'connected'     : False }
