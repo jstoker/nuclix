@@ -148,7 +148,7 @@ class UplinkConnection(asyncore.dispatcher):
     def push(self, text):
         '''Nicer interface to push data onto the sendq stack.'''
 
-        self.sendq.push('%s' % text)
+        self.sendq.appendleft('%s' % text)
 
 def init():
     '''Connect to the uplink.'''
