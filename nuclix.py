@@ -133,6 +133,7 @@ def main(argv):
             pid_file.close()
         except IOError, e:
             sys.stderr.write('nuclix: unable to write pid file: %s\n' % os.strerror(e.args[0]))
+            sys.exit(os.EX_SOFTWARE)
 
         # Try to close all open file descriptors.
         # If we cant find the max number, just close the first 256.
