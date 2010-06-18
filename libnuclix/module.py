@@ -11,6 +11,7 @@ from imp import load_source
 import var
 import logger
 import event
+import conf
 
 def load(module):
     '''Load a module.'''
