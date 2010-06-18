@@ -16,5 +16,5 @@ channels, users, servers = {}, {}, {}
 # Loaded modules/timers list.
 modules_loaded, timers = [], []
 
-# Configuration parser and logger instance.
-log, conf = None, None
+# Configuration parser, connection, and logger instance.
+log, conf, conn = None, None, None
