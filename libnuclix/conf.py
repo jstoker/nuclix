@@ -4,6 +4,9 @@
 
 '''Configuration parser.'''
 
+# Import requird Python module.
+import os
+
 # Import required libnuclix module.
 import logger
 
