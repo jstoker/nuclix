@@ -9,7 +9,7 @@
 import getopt, os, signal, sys
 
 # Import required libnuclix modules.
-from libnuclix import var, logger, socket, module, conf
+from libnuclix import var, logger, conn, module, conf
 
 def print_cla_help(stderr):
     '''Output command line options and their meanings.'''
