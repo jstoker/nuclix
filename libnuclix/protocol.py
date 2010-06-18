@@ -4,6 +4,9 @@
 
 '''Protocol handler. This is quite ugly, and we need to figure out a better way.'''
 
+# Import required Python module.
+import os
+
 # Import required Python function.
 from imp import load_source
 
