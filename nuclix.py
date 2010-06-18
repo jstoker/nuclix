@@ -182,5 +182,20 @@ def main(argv):
     # Load all modules listed in the configuration.
     module.load_all_from_conf()
 
-if __name__ == '__main__':  
+    # Initialize connection to the uplink.
+    conn.init()
+
+    # Start the loop.
+    while True:
+        delay = timer.next_run()
+
+        if delay <= time.time():
+            timer.run()
+
+        asyncore.poll(1)
+
+    # This should NEVER happen.
+    shutdown(os.EX_SOFTWARE, 'main loop exited (BUG)')
+
+if __name__ == '__main__':
     main(sys.argv[1:])
