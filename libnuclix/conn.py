@@ -102,7 +102,7 @@ class UplinkConnection(asyncore.dispatcher):
         logger.info('conn.UplinkConnection().handle_connect(): connection established')
 
         self.server['connected'] = True
-        protocol.negotiate.link(self)
+        protocol.negotiate_link(self)
 
     def handle_close(self):
         '''Handle connection closings.'''
