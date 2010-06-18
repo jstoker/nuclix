@@ -27,7 +27,7 @@ class ConfigBlock(object):
             if not self.var.get(name, defval):
                 raise VariableNotFound('%s:%s not found.' % (name, defval))
         else:
-            return self.vars.get(name, None)
+            return self.var.get(name, None)
 
 class BlockNotFound(Exception):
     '''Block not found.'''
