@@ -22,7 +22,7 @@ import timer
 import protocol
 
 # Import required libnuclix function.
-import shutdown
+from libnuclix import shutdown
 
 class UplinkConnection(asyncore.dispatcher):
     '''Provide an event based IRC connection.'''
