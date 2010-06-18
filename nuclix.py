@@ -89,7 +89,7 @@ def main(argv):
     # Initialize the configuration parser.
     try:
         var.conf = conf.ConfigParser(var.config_file)
-    except var.conf.GeneralException, err:
+    except conf.GeneralError, err:
         sys.stderr.write('nuclix: configuration error for %s: %s\n' % (var.config_file, err))
         sys.exit(os.EX_CONFIG)
 
