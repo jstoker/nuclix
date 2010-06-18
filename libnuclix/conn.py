@@ -191,4 +191,6 @@ def init():
 def disconnect(code, reason):
     '''Disconnect from the uplink.'''
 
-    var.conn.shutdown(2)
+    # We do this because the program can exit before UplinkConnection is instantiated.
+    if var.conn:
+        var.conn.shutdown(2)
