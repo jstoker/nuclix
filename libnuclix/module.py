@@ -78,7 +78,7 @@ def load_all_from_conf():
 
             if name:
                 load(name)
-    except (var.conf.BlockNotFound, var.conf.VariableNotFound):
+    except (conf.BlockNotFound, conf.VariableNotFound):
         pass # Means they dont want modules loaded.
 
     event.dispatch('OnModuleLoadAllFromConf')
