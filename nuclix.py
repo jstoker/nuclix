@@ -9,7 +9,7 @@
 import asyncore, getopt, os, signal, sys, time
 
 # Import required libnuclix modules.
-from libnuclix import var, logger, conn, module, conf, timer
+from libnuclix import var, logger, conn, module, conf, timer, protocol
 
 # Import required libnuclix function.
 from libnuclix import shutdown
