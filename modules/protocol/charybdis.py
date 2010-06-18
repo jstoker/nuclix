@@ -35,12 +35,12 @@ def on_socket_read(conn, data):
 
     pass
 
-def module_init():
-    '''Module entry point.'''
+def protocol_init():
+    '''Protocol entry point.'''
 
     event.attach('OnRawSocketRead', on_socket_read)
 
-def module_fini():
-    '''Module exit point.'''
+def protocol_fini():
+    '''Protocol exit point.'''
 
     event.detach('OnRawSocketRead', on_socket_read)
