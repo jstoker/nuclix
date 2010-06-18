@@ -31,9 +31,10 @@ def main(argv):
     '''Our entry point.'''
 
     # Are we root?
-    if os.geteuid() == 0:
-        sys.stderr.write('nuclix: will not run under root for security purposes\n')
-        sys.exit(0)
+    if os.name != 'nt':
+        if os.geteuid() == 0:
+            sys.stderr.write('nuclix: will not run under root for security purposes\n')
+            sys.exit(0)
 
     # Parse command line options and parameter list.
     try:
@@ -53,23 +54,24 @@ def main(argv):
             var.fork = False
 
     # Attach signals to handlers.
-    signal.signal(signal.SIGHUP, on_sighup)
-    signal.signal(signal.SIGINT, on_sigint)
-    signal.signal(signal.SIGTERM, on_sigterm)
-    signal.signal(signal.SIGPIPE, signal.SIG_IGN)
-    signal.signal(signal.SIGALRM, signal.SIG_IGN)
-    signal.signal(signal.SIGCHLD, signal.SIG_IGN)
-    signal.signal(signal.SIGWINCH, signal.SIG_IGN)
-    signal.signal(signal.SIGTTIN, signal.SIG_IGN)
-    signal.signal(signal.SIGTTOU, signal.SIG_IGN)
-    signal.signal(signal.SIGTSTP, signal.SIG_IGN)
+    if os.name != 'nt':
+        signal.signal(signal.SIGHUP, on_sighup)
+        signal.signal(signal.SIGINT, on_sigint)
+        signal.signal(signal.SIGTERM, on_sigterm)
+        signal.signal(signal.SIGPIPE, signal.SIG_IGN)
+        signal.signal(signal.SIGALRM, signal.SIG_IGN)
+        signal.signal(signal.SIGCHLD, signal.SIG_IGN)
+        signal.signal(signal.SIGWINCH, signal.SIG_IGN)
+        signal.signal(signal.SIGTTIN, signal.SIG_IGN)
+        signal.signal(signal.SIGTTOU, signal.SIG_IGN)
+        signal.signal(signal.SIGTSTP, signal.SIG_IGN)
 
     print 'nuclix: version %s' % var.version
 
     # Initialize the configuration parser.
     try:
         var.conf = conf.ConfigParser(var.config_file)
-    except conf.GeneralException, err:
+    except var.conf.GeneralException, err:
         sys.stderr.write('nuclix: configuration error for %s: %s\n' % (var.config_file, err))
         sys.exit(os.EX_CONFIG)
 
@@ -96,7 +98,7 @@ def main(argv):
         pass
 
     # Fork into the background.
-    if var.fork:
+    if var.fork and os.name != 'nt':
         try:
             pid = os.fork()
         except OSError, e:
