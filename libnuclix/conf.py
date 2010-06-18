@@ -36,8 +36,8 @@ class BlockNotFound(Exception):
         Exception.__init__(self, err)
         self.__err = err
 
-        if logger.error != None:
-            logger.error('conf.BlockNotFound(): %s' % self.__err)
+        if logger.debug != None:
+            logger.debug('conf.BlockNotFound(): %s' % self.__err)
 
     def __str__(self):
         return self.__err
@@ -49,8 +49,8 @@ class VariableNotFound(Exception):
         Exception.__init__(self, err)
         self.__err = err
 
-        if logger.error != None:
-            logger.error('conf.VariableNotFound(): %s' % self.__err)
+        if logger.debug != None:
+            logger.debug('conf.VariableNotFound(): %s' % self.__err)
 
     def __str__(self):
         return self.__err
@@ -62,8 +62,8 @@ class GeneralError(Exception):
         Exception.__init__(self, err)
         self.__err = err
 
-        if logger.error != None:
-            logger.error('conf.GeneralError(): %s' % self.__err)
+        if logger.debug != None:
+            logger.debug('conf.GeneralError(): %s' % self.__err)
 
     def __str__(self):
         return self.__err
