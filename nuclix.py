@@ -11,6 +11,24 @@ import getopt, os, signal, sys
 # Import required libnuclix modules.
 from libnuclix import var, logger, conn, module, conf
 
+# Import required libnuclix function.
+from libnuclix import shutdown
+
+def on_sighup(signum, frame):
+    '''Handle signal SIGHUP. This will rehash the configuration.'''
+
+    var.conf.rehash(True)
+
+def on_sigint(signum, frame):
+    '''Handle signal SIGINT. This will exit gracefully.'''
+
+    shutdown(signum, 'Caught SIGINT (terminal interrupt)')
+
+def on_sigterm(signum, frame):
+    '''Handle signal SIGTERM. This will exit gracefully.'''
+
+    shutdown(sighun, 'Caught SIGTERM')
+
 def print_cla_help(stderr):
     '''Output command line options and their meanings.'''
 
