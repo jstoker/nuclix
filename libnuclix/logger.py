@@ -12,6 +12,7 @@ from logging import handlers
 
 # Import required libnuclix modules.
 import var
+import conf
 
 # Make these references to the real methods.
 debug, info, warning, error, critical = None, None, None, None, None
@@ -45,7 +46,7 @@ def init():
         backup_count = var.conf.get('logger', 'max_logs')[0]
         lformat = var.conf.get('logger', 'format')[0]
         sformat = var.conf.get('logger', 'stream_format')[0]
-    except (var.conf.BlockNotFound, var.conf.VariableNotFound):
+    except (conf.BlockNotFound, conf.VariableNotFound):
         print 'nuclix: logger disabled, missing variables, if you want logging please check your configuration'
         return
 

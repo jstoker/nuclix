@@ -20,6 +20,7 @@ import logger
 import var
 import timer
 import protocol
+import conf
 
 # Import required libnuclix function.
 from libnuclix import shutdown
@@ -127,7 +128,7 @@ class UplinkConnection(asyncore.dispatcher):
 
         try:
             traceback_file = var.conf.get('options', 'traceback_file')[0]
-        except var.conf.VariableNotFound:
+        except conf.VariableNotFound:
             raise
 
         try:
@@ -165,7 +166,7 @@ def init():
 
         if var.conf.get('uplink', 'recontime')[0]:
             serv['recontime'] = int(var.conf.get('uplink', 'recontime')[0])
-    except (var.conf.BlockNotFound, var.conf.VariableNotFound):
+    except (conf.BlockNotFound, conf.VariableNotFound):
         shutdown(os.EX_CONFIG, 'uplink directives missing')
 
     event.dispatch('OnUplinkRecognization', serv)
