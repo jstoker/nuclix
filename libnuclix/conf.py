@@ -84,7 +84,7 @@ class ConfigParser:
 
         # Attempt to open the file.
         try:
-            conf_file = open(self.file, 'r')
+            conf_file = open(self.name, 'r')
         except IOError, e:
             raise GeneralError('Error opening configuration file %s: %s' % (self.file, os.strerror(e.args[0])))
 
