@@ -182,6 +182,9 @@ def main(argv):
     # Load all modules listed in the configuration.
     module.load_all_from_conf()
 
+    # Load the protocol.
+    protocol.load(var.conf.get('uplink', 'protocol')[0])
+
     # Initialize connection to the uplink.
     conn.init()
 
