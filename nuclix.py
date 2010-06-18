@@ -90,7 +90,7 @@ def main(argv):
     try:
         var.conf = conf.ConfigParser(var.config_file)
     except conf.GeneralError, err:
-        sys.stderr.write('nuclix: configuration error for %s: %s\n' % (var.config_file, err))
+        sys.stderr.write('nuclix: %s\n' % err)
         sys.exit(os.EX_CONFIG)
 
     # Check to see if we are already running.
