@@ -161,7 +161,7 @@ def connect():
         serv['password'] = var.conf.get('uplink', 'password')[0]
         serv['vhost'] = var.conf.get('uplink', 'vhost')[0]
         serv['actual'] = var.conf.get('uplink', 'actual')[0]
-        serv['port'] = int(var.conf.get('uplink', 'actual')[0]
+        serv['port'] = int(var.conf.get('uplink', 'port')[0])
 
         if var.conf.get('uplink', 'recontime')[0]:
             serv['recontime'] = int(var.conf.get('uplink', 'recontime')[0])
