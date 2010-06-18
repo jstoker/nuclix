@@ -12,7 +12,7 @@ __all___ = ['channel',
             'protocol',
             'server',
             'service',
-            'socket',
+            'conn',
             'timer',
             'user',
             'var']
@@ -24,11 +24,11 @@ def shutdown(code, reason):
     from sys import exit
 
     # Import required libnuclix modules.
-    import logger, module, server, socket, var
+    import logger, module, server, conn, var
 
     logger.info('libnuclix.shutdown(): exiting with code %d: %s' % (code, reason))
     module.unload_all()
-    socket.disconnect(code, reason)
+    conn.disconnect(code, reason)
 
     for i in var.servers:
         server.delete(i)
