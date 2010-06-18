@@ -121,7 +121,7 @@ class UplinkConnection(asyncore.dispatcher):
 
         if self.server['recontime']:
             logger.info('conn.UplinkConnection().handle_close(): reconnecting in %d second%s' % (self.server['recontime'], 's' if self.server['recontime'] != 1 else ''))
-            timer.add('uplink.reconnect', True, init, self.server['recontime'], self.server)
+            timer.add('uplink.reconnect', True, reinit, self.server['recontime'], self.server)
 
             event.dispatch('OnReconnect', self.server)
         else:
@@ -213,6 +213,14 @@ def init():
 
     # Now connect to the uplink.
     var.conn.connect(sa)
+
+def reinit(server):
+    '''Re-initialize the uplink system.'''
+    
+    if server['connected']:
+        return
+
+    init()
 
 def disconnect(code, reason):
     '''Disconnect from the uplink.'''
