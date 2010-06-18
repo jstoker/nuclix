@@ -34,7 +34,7 @@ class UplinkConnection(asyncore.dispatcher):
 
         self.server = server
         self.holdline = None
-        self.last_recv = time()
+        self.last_recv = time.time()
         self.pinged = False
 
         self.sendq = deque()
