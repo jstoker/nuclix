@@ -15,10 +15,6 @@ import protocol
 def add(name, ts):
     '''Add the channel to the hash list.'''
 
-    if not name.startswith(protocol.chan_prefixes):
-        logger.debug('channel.add(): got a channel with an invalid prefix: %s' % name)
-        return
-
     if name in var.channels:
         logger.debug('channel.add(): channel already exists: %s' % name)
         return
