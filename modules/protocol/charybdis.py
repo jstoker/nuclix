@@ -66,7 +66,7 @@ def negotiate_link(conn):
 def m_ping(conn, parv):
     '''Reply to PING's.'''
 
-    conn.push(':%s PONG %s %s' % (conn.server['services_server'], conn.server['actual'], parv[0]))
+    conn.push(':%s PONG %s %s' % (conn.server['numeric'] if uses_uid else conn.server['services_server'], conn.server['services_server'], parv[0]))
     return
 
 def m_pong(conn, parv):
@@ -91,25 +91,26 @@ def m_server(conn, parv):
 def on_socket_read(conn, data):
     '''Read data read from the connection.'''
 
-    for line in data:
-        parv = []
-    
-        # Split this crap up with the help of RE.
-        try:
-            origin, cmd, target, message = pattern.match(line).groups()
-        except AttributeError:
-            continue
+    global pattern
 
-        # Make an IRC parameter argument vector.
-        if target:
-            parv.append(target) 
+    parv = []
 
-        parv.append(message)
+    # Split this crap up with the help of RE.
+    try:
+        origin, cmd, target, message = pattern.match(data).groups()
+    except AttributeError:
+        pass
 
-        if cmd == 'PING':
-            m_ping(conn, parv)
-        elif cmd == 'PONG':
-            m_pong(conn, parv)
+    # Make an IRC parameter argument vector.
+    if target:
+        parv.append(target) 
+
+    parv.append(message)
+
+    if cmd == 'PING':
+        m_ping(conn, parv)
+    elif cmd == 'PONG':
+        m_pong(conn, parv)
 
 def protocol_init():
     '''Protocol entry point.'''
