@@ -16,6 +16,7 @@ from libnuclix import logger
 from libnuclix import protocol
 
 uses_uid = False
+protocol.chan_prefixes = ['#', '&']
 
 # A regular expression to match and dissect IRC protocol messages.
 # This is actually around 60% faster than not using RE.
@@ -90,6 +91,15 @@ def parse_data(conn, data):
 
     if command == 'SERVER':
         m_server(conn, parv)
+
+    if command == 'SJOIN':
+        m_sjoin(conn, parv)
+
+def m_sjoin(conn, parv):
+    '''Channel syncing.'''
+
+    if name not in var.channels:
+        channel.add(name)
 
 def m_ping(conn, parv):
     '''Reply to PING's.'''
