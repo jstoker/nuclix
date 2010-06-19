@@ -77,9 +77,6 @@ class UplinkConnection(asyncore.dispatcher):
         self.recvq.extend([line for line in datalines])
 
         # Dispatch it.
-        event.dispatch('OnRawSocketRead', self, datalines)
-
-        # Send it off to be reported.
         self.report()
 
     def handle_write(self):
@@ -158,13 +155,13 @@ class UplinkConnection(asyncore.dispatcher):
         self.sendq.appendleft('%s' % text)
 
     def report(self):
-        '''Report the recvq pops.'''
+        '''Report new data.'''
 
         while len(self.recvq):
             line = self.recvq.pop()
-            event.dispatch('OnReport', line)
 
-            logger.debug('conn.UplinkConnection().report(): %s -> %s' % (self.server['address'], line))
+            event.dispatch('OnRawSocketRead', self.server, line)
+            logger.debug('conn.report(): %s -> %s' % (self.server['address'], line))
 
 def init():
     '''Connect to the uplink.'''
