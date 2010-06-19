@@ -6,6 +6,7 @@
 
 # Import required libnuclix modules.
 import logger
+import var
 
 def add(name, hops, uplink, sid, desc):
     '''Add a server.'''
