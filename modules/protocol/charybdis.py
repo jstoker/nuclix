@@ -17,6 +17,11 @@ from libnuclix import protocol
 from libnuclix import channel
 
 uses_uid = False
+use_euid = False
+rserv_support = False
+topic_burst = False
+eopmod = False
+mlock = False
 
 # A regular expression to match and dissect IRC protocol messages.
 # This is actually around 60% faster than not using RE.
@@ -101,6 +106,34 @@ def parse_data(conn, data):
 
     if command == 'EUID':
         m_euid(conn, parv)
+
+    if command == 'CAPAB':
+        m_capab(conn, parv)
+
+def m_capab(conn, parv):
+    '''See our uplink capabilities.'''
+
+    global use_euid
+    global rserv_support
+    global topic_burst
+    global eopmod
+    global mlock
+
+    if 'EUID' in parv[0]:
+        logger.debug('uplink supports EUID, enabled')
+        use_euid = True
+    if 'SERVICES' in parv[0]:
+        logger.debug('uplink supports RSERV, enabled')
+        rserv_support = True
+    if 'TB' in parv[0]:
+        logger.debug('uplink supports topic bursting, enabled')
+        topic_burst = True
+    if 'EOPMOD' in parv[0]:
+        logger.debug('uplink supports EOPMOD, enabled')
+        eopmod = True
+    if 'MLOCK' in parv[0]:
+        logger.debug('uplink supports MLOCK, enabled')
+        mlock = True
 
 def m_squit(conn, parv):
     '''Handle server leavings.'''

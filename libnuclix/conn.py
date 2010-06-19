@@ -40,7 +40,7 @@ class UplinkConnection(asyncore.dispatcher):
         self.sendq = deque()
         self.recvq = deque()
 
-    def writeable(self):
+    def writable(self):
         '''See if we should write data.'''
 
         return len(self.sendq) > 0
@@ -83,10 +83,7 @@ class UplinkConnection(asyncore.dispatcher):
         '''Write the first line in the sendq to the socket.'''
 
         # Grab the first line from the sendq.
-        try:
-            line = self.sendq[-1] + '\r\n'
-        except IndexError:
-            return
+        line = self.sendq[-1] + '\r\n'
 
         # Try to send it.
         num_sent = self.send(line)
