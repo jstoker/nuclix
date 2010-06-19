@@ -119,19 +119,19 @@ def m_capab(conn, parv):
     global eopmod
     global mlock
 
-    if 'EUID' in parv:
+    if 'EUID' in parv[0]:
         logger.debug('uplink supports EUID, enabled')
         use_euid = True
-    elif 'SERVICES' in parv:
+    if 'SERVICES' in parv[0]:
         logger.debug('uplink supports RSERV, enabled')
         rserv_support = True
-    elif 'TB' in parv:
+    if 'TB' in parv[0]:
         logger.debug('uplink supports topic bursting, enabled')
         topic_burst = True
-    elif 'EOPMOD' in parv:
+    if 'EOPMOD' in parv[0]:
         logger.debug('uplink supports EOPMOD, enabled')
         eopmod = True
-    elif 'MLOCK' in parv:
+    if 'MLOCK' in parv[0]:
         logger.debug('uplink supports MLOCK, enabled')
         mlock = True
 
