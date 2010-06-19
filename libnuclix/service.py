@@ -7,7 +7,7 @@
 # Import required libnuclix modules.
 import logger
 
-def add(name):
+def add(name, nick, ident, host, gecos):
     '''Add a service.'''
 
     if name in var.services:
@@ -20,7 +20,15 @@ def add(name):
                            'gecos'    : None,
                            'commands' : {} }
 
+    var.services[name]['nick'] = nick
+    var.services[name]['ident'] = ident
+    var.services[name]['host'] = host
+    var.services[name]['gecos'] = gecos
+
     logger.info('service %s created' % name)
+
+    # Now introduce it to the network.
+    protocol.introduce_service(var.services[name])
 
 def del(name):
     '''Delete a service.'''
