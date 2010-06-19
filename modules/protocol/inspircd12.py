@@ -163,8 +163,6 @@ def m_pong(conn, parv):
 def m_uid(conn, parv):
     '''User connected.'''
 
-    print parv
-
     if parv >= 9:
         logger.debug('user connected: %s' % parv[0])
 
