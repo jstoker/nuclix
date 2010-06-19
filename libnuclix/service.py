@@ -38,6 +38,9 @@ def del(name):
         logger.debug('attempted to delete service %s that doesnt exist' % name)
         return
 
+    # Remove the service from the network before removing the commands.
+    protocol.quit(name, 'service removed')
+
     var.services[name]['nick'] = None
     var.services[name]['user'] = None
     var.services[name]['host'] = None
