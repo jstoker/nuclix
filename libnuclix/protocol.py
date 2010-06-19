@@ -26,6 +26,13 @@ def negotiate_link(conn):
 
     mod.negotiate_link(conn)
 
+def introduce_service(service):
+    '''Introduce a service.'''
+
+    global mod
+
+    mod.introduce_service(service)
+
 def parse_data(conn, data):
     '''Parse the data.'''
 
