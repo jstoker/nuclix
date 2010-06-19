@@ -140,7 +140,9 @@ def m_pong(conn, parv):
 def m_server(conn, parv):
     '''Handle new servers.'''
 
-    logger.info('m_server(): new server: %s' % parv[0])
+    global uses_uid
+
+    logger.debug('m_server(): new server: %s' % parv[0])
 
 def protocol_init():
     '''Protocol entry point.'''
