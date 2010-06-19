@@ -109,8 +109,12 @@ def m_sjoin(conn, parv):
     '''Channel syncing.'''
     
     # :proteus.malkier.net SJOIN 1073516550 #shrike +tn :@sycobuny @+rakaur
-    chan = parv[1]
-    ts = parv[0]
+    #
+    # XXX: Since the regex doesn't get the information in the way we would expect,
+    # we have to do this. Somebody please make a charybdis protocol regex? Thanks.
+    sparv = parv[1].split(' ')
+    chan = sparv[0]
+    ts = sparv[1]
 
     channel.add(chan, ts)
 
