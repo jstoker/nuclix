@@ -39,6 +39,7 @@ pattern = r'''
             )?             # close non-capturing group
             $              # end of string
             ''' 
+
 # Note that this doesn't match *every* IRC message,
 # just the ones we care about. It also doesn't match
 # every IRC message in the way we want. We get what
@@ -94,6 +95,15 @@ def parse_data(conn, data):
 
     if command == 'SJOIN':
         m_sjoin(conn, parv)
+
+    if command == 'SQUIT':
+        m_squit(conn, parv)
+
+def m_squit(conn, parv):
+    '''Handle server leavings.'''
+
+    logger.info('m_squit(): server %s leaving from %s' % (parv[0], parv[1]))
+    server.delte(parv[0])
 
 def m_sjoin(conn, parv):
     '''Channel syncing.'''
