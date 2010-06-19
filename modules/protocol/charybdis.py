@@ -149,10 +149,14 @@ def m_server(conn, parv):
 
     global uses_uid
 
+    # XXX: Since the regex doesn't get the information in the way we would expect,
+    # we have to do this. Somebody please make a charybdis protocol regex? Thanks.
+    sparv = parv[1].split(' ')
+
     # SERVER salvation.sephuin.net 1 :(H) Seeking salvation.
     logger.debug('new server: %s' % parv[0])
 
-    #server.add(parv[0], parv[1], None, parv[3])
+    server.add(parv[0], sparv[0], None, sparv[2], sparv[3])
 
 def m_euid(conn, parv):
     '''User connected.'''
@@ -165,7 +169,7 @@ def m_euid(conn, parv):
 
     if parv >= 11:
         logger.debug('user connected: %s' % parv[0])
-        user.add(parv[0], sparv[4], sparv[5] if sparv[8].startswith('*') else sparv[8], sparv[5], sparv[6], sparv[7], sparv[8], None, sparv[0]))
+        #user.add(parv[0], sparv[4], sparv[5] if sparv[8].startswith('*') else sparv[8], sparv[5], sparv[6], sparv[7], sparv[8], None, sparv[0]))
 
 def protocol_init():
     '''Protocol entry point.'''
