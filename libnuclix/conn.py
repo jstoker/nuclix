@@ -160,7 +160,7 @@ class UplinkConnection(asyncore.dispatcher):
         while len(self.recvq):
             line = self.recvq.pop()
 
-            event.dispatch('OnRawSocketRead', self.server, line)
+            event.dispatch('OnRawSocketRead', self, line)
             logger.debug('conn.report(): %s -> %s' % (self.server['address'], line))
 
 def init():
