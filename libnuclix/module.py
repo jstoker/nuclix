@@ -21,20 +21,20 @@ def load(module):
     try:
         mod = load_source(module, module)
     except ImportError, e:
-        logger.error('module.load(): unable to load module %s: %s' % (module, e))
+        logger.error('unable to load module %s: %s' % (module, e))
         return
 
     # Check to make sure the module has init/fini functions.
     if not hasattr(mod, 'module_init'):
-        logger.error('module.load(): unable to use module %s: no entry point has been defined' % mod.__name__)
+        logger.error('unable to use module %s: no entry point has been defined' % mod.__name__)
         return
 
     if not hasattr(mod, 'module_fini'):
-        logger.error('module.load(): unable to use module %s: no exit point has been defiend' % mod.__name__)
+        logger.error('unable to use module %s: no exit point has been defined' % mod.__name__)
         return
 
     mod.module_init()
-    logger.info('module.load(): module %s loaded' % mod.__name__)
+    logger.info('module %s loaded' % mod.__name__)
 
     # Add the module to the loaded modules list.
     var.modules_loaded.append(mod)
@@ -44,7 +44,7 @@ def unload(module):
     '''Unload a module.'''
 
     if module not in var.modules_loaded:
-        logger.warning('module.unload(): %s is not in the loaded modules list' % module)
+        logger.warning('%s is not in the loaded modules list' % module)
         return
 
     module.module_fini()

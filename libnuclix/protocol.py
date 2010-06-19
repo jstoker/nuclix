@@ -51,7 +51,7 @@ def load(name):
         shutdown(os.EX_SOFTWARE, 'protocol does not have parser')
 
     mod.protocol_init()
-    logger.info('protocol.load(): protocol %s loaded' % mod.__name__)
+    logger.info('protocol %s loaded' % mod.__name__)
 
 def unload():
     '''Unload the protocol module.'''
@@ -59,4 +59,4 @@ def unload():
     global mod
 
     mod.protocol_fini()
-    logger.info('protocol.unload(): protocol %s unloaded' % mod.__name__)
+    logger.info('protocol %s unloaded' % mod.__name__)

@@ -40,7 +40,7 @@ def attach(event, func):
     events[event]['funcs'].append(func)
     return True
 
-    logger.debug('event.attach(): attached function %s to event %s' % (func, event))
+    logger.debug('attached function %s to event %s' % (func, event))
 
 def detach(event, func):
     '''Remove a function from an event.'''
@@ -51,7 +51,7 @@ def detach(event, func):
         return False
 
     events[event]['funcs'].remove(func)
-    logger.debug('event.detach(): detached function %s from event %s' % (func, event))
+    logger.debug('detached function %s from event %s' % (func, event))
 
 def find(name):
     '''Find an event created.'''
