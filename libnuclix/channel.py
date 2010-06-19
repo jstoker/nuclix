@@ -12,7 +12,7 @@ import var
 import logger
 import protocol
 
-def add(name):
+def add(name, ts):
     '''Add the channel to the hash list.'''
 
     if not name.startswith(protocol.chan_prefixes):
@@ -30,7 +30,7 @@ def add(name):
                            'topic_setter' : None,
                            'metadata'     : [] }
 
-    var.channels[name]['ts'] = time()
+    var.channels[name]['ts'] = ts
     logger.debug('channel.add(): %s' % name)
 
 def delete(name):
