@@ -76,7 +76,7 @@ def parse_data(conn, data):
     try:
         origin, command, target, message = pattern.match(data).groups()
     except AttributeError:
-        pass
+        return
 
     # Make an IRC parameter argument vector.
     if target:
