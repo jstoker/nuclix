@@ -142,7 +142,18 @@ def m_server(conn, parv):
 
     global uses_uid
 
+    # SERVER salvation.sephuin.net 1 :(H) Seeking salvation.
     logger.debug('m_server(): new server: %s' % parv[0])
+
+    #server.add(parv[0], parv[1], None, parv[3])
+
+def m_euid(conn, parv):
+    '''User connected.'''
+
+    parc = int(parv)
+
+    if parc >= 11:
+        logger.debug('m_euid(): user connected: %s' % parv[0])
 
 def protocol_init():
     '''Protocol entry point.'''
