@@ -40,7 +40,7 @@ class UplinkConnection(asyncore.dispatcher):
         self.sendq = deque()
         self.recvq = deque()
 
-    def writeable(self):
+    def writable(self):
         '''See if we should write data.'''
 
         return len(self.sendq) > 0
