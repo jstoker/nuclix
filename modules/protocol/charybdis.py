@@ -119,23 +119,19 @@ def m_capab(conn, parv):
     global eopmod
     global mlock
 
-    # XXX: Since the regex doesn't get the information in the way we would expect,
-    # we have to do this. Somebody please make a charybdis protocol regex? Thanks.
-    sparv = parv[1].split(' ')
-
-    if 'EUID' in sparv:
+    if 'EUID' in parv:
         logger.debug('uplink supports EUID, enabled')
         use_euid = True
-    elif 'SERVICES' in sparv:
+    elif 'SERVICES' in parv:
         logger.debug('uplink supports RSERV, enabled')
         rserv_support = True
-    elif 'TB' in sparv:
+    elif 'TB' in parv:
         logger.debug('uplink supports topic bursting, enabled')
         topic_burst = True
-    elif 'EOPMOD' in sparv:
+    elif 'EOPMOD' in parv:
         logger.debug('uplink supports EOPMOD, enabled')
         eopmod = True
-    elif 'MLOCK' in sparv:
+    elif 'MLOCK' in parv:
         logger.debug('uplink supports MLOCK, enabled')
         mlock = True
 
