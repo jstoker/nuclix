@@ -99,6 +99,9 @@ def parse_data(conn, data):
     if command == 'SQUIT':
         m_squit(conn, parv)
 
+    if command == 'EUID':
+        m_euid(conn, parv)
+
 def m_squit(conn, parv):
     '''Handle server leavings.'''
 
@@ -154,9 +157,9 @@ def m_server(conn, parv):
 def m_euid(conn, parv):
     '''User connected.'''
 
-    parc = int(parv)
+    print parv
 
-    if parc >= 11:
+    if parv >= 11:
         logger.debug('user connected: %s' % parv[0])
 
 def protocol_init():
