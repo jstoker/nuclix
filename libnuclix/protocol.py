@@ -39,7 +39,7 @@ def load(name):
     global mod
 
     try:
-        mod = load_source(name, name)
+        mod = load_source('protocol', name)
     except ImportError, e:
         shutdown(os.EX_SOFTWARE, 'protocol unable to load: %s' % e)
 
