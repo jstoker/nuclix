@@ -6,6 +6,7 @@
 
 # Import required libnuclix modules.
 import logger
+import protocol
 
 def add(name, nick, ident, host, gecos):
     '''Add a service.'''
