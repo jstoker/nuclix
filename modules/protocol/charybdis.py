@@ -102,7 +102,7 @@ def parse_data(conn, data):
 def m_squit(conn, parv):
     '''Handle server leavings.'''
 
-    logger.info('m_squit(): server %s leaving from %s' % (parv[0], parv[1]))
+    logger.info('server %s leaving from %s' % (parv[0], parv[1]))
     server.delte(parv[0])
 
 def m_sjoin(conn, parv):
@@ -132,7 +132,7 @@ def m_pong(conn, parv):
     if parv[0] not in var.servers:
         return
 
-    logger.info('m_pong(): bursting to %s (%d user%s)' % (parv[0], var.servers[parv[0]]['users'], 's' if var.servers[parv[0]]['users'] != 1 else ''))
+    logger.info('bursting to %s (%d user%s)' % (parv[0], var.servers[parv[0]]['users'], 's' if var.servers[parv[0]]['users'] != 1 else ''))
 
     if conn.server['actual'] == parv[0]:
         return
@@ -143,7 +143,7 @@ def m_server(conn, parv):
     global uses_uid
 
     # SERVER salvation.sephuin.net 1 :(H) Seeking salvation.
-    logger.debug('m_server(): new server: %s' % parv[0])
+    logger.debug('new server: %s' % parv[0])
 
     #server.add(parv[0], parv[1], None, parv[3])
 
@@ -153,7 +153,7 @@ def m_euid(conn, parv):
     parc = int(parv)
 
     if parc >= 11:
-        logger.debug('m_euid(): user connected: %s' % parv[0])
+        logger.debug('user connected: %s' % parv[0])
 
 def protocol_init():
     '''Protocol entry point.'''
