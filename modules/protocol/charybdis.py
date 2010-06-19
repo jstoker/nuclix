@@ -157,10 +157,15 @@ def m_server(conn, parv):
 def m_euid(conn, parv):
     '''User connected.'''
 
-    print parv
+    # :42X EUID dKingston 1 1276815544 +Zahloswz ~logic ov796-372.members.linode.com 97.107.140.237 42XAAAAAC li101-237.members.linode.com * :Michael Rodriguez
+
+    # XXX: Since the regex doesn't get the information in the way we would expect,
+    # we have to do this. Somebody please make a charybdis protocol regex? Thanks.
+    sparv = parv[1].split(' ')
 
     if parv >= 11:
         logger.debug('user connected: %s' % parv[0])
+        user.add(parv[0], sparv[4], sparv[5] if sparv[8].startswith('*') else sparv[8], sparv[5], sparv[6], sparv[7], sparv[8], None, sparv[0]))
 
 def protocol_init():
     '''Protocol entry point.'''
