@@ -14,9 +14,9 @@ from libnuclix import var
 from libnuclix import server
 from libnuclix import logger
 from libnuclix import protocol
+from libnuclix import channel
 
 uses_uid = False
-protocol.chan_prefixes = ['#', '&']
 
 # A regular expression to match and dissect IRC protocol messages.
 # This is actually around 60% faster than not using RE.
