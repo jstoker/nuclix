@@ -97,9 +97,12 @@ def parse_data(conn, data):
 
 def m_sjoin(conn, parv):
     '''Channel syncing.'''
+    
+    # :proteus.malkier.net SJOIN 1073516550 #shrike +tn :@sycobuny @+rakaur
+    chan = parv[1]
+    ts = parv[0]
 
-    if name not in var.channels:
-        channel.add(name)
+    channel.add(chan, ts)
 
 def m_ping(conn, parv):
     '''Reply to PING's.'''
