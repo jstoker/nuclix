@@ -11,6 +11,8 @@ import re
 # Import required libnuclix modules.
 from libnuclix import event
 from libnuclix import var
+from libnuclix import server
+from libnuclix import logger
 
 uses_uid = False
 
@@ -61,10 +63,52 @@ def negotiate_link(conn):
     conn.push('SERVER %s 1 :%s' % (conn.server['services_name'], conn.server['services_desc']))
     conn.push('SVINFO %d 3 0 :%d' % (6 if uses_uid else 5, time.time()))
 
+def m_ping(conn, parv):
+    '''Reply to PING's.'''
+
+    conn.push(':%s PONG %s %s' % (conn.server['services_server'], conn.server['actual'], parv[0]))
+    return
+
+def m_pong(conn, parv):
+    '''Reply to PONG's.'''
+
+    if not parv[0]:
+        return
+
+    if parv[0] not in var.servers:
+        return
+
+    logger.info('m_pong(): bursting to %s (%d user%s)' % (parv[0], var.servers[parv[0]]['users'], 's' if var.servers[parv[0]]['users'] != 1 else ''))
+    
+    if conn.server['actual'] == parv[0]:
+        return
+
+def m_server(conn, parv):
+    '''Handle new servers.'''
+
+    logger.info('m_server(): new server: %s' % parv[0])
+
 def on_socket_read(conn, data):
     '''Read data read from the connection.'''
 
+    parv = []
     
+    # Split this crap up with the help of RE.
+    try:
+        origin, cmd, target, message = pattern.match(data).groups()
+    except AttributeError:
+        continue
+
+    # Make an IRC parameter argument vector.
+    if target:
+        parv.append(target) 
+
+    parv.append(message)
+
+    if cmd == 'PING':
+        m_ping(conn, parv)
+    else if cmd == 'PONG':
+        m_pong(conn, parv)
 
 def protocol_init():
     '''Protocol entry point.'''
