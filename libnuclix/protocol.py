@@ -7,8 +7,9 @@
 # Import required Python module.
 import os
 
-# Import required Python function.
+# Import required Python functions.
 from imp import load_source
+from thread import start_new_thread
 
 # Import required libnuclix module.
 import logger
@@ -17,6 +18,53 @@ import logger
 from libnuclix import shutdown
 
 mod = None
+commands = {}
+
+def dispatch(on_thread, command, *args):
+    '''Dispatch IRC commands.'''
+
+    global commands
+
+    logger.debug('protocol.dispatch(): dispatching %s (threaded = %s)' % (command, on_thread))
+
+    try:
+        if on_thread:
+            start_new_thread(commands[command]['first'], args)
+        else:
+            commands[command]['first'](*args)
+    except:
+        pass
+
+def attach(command, func):
+    '''Attach a function to a command.'''
+
+    global commands
+
+    command = command.upper()
+
+    try:
+        test = commands[command]
+    except KeyError:
+        commands[command] = { 'first' : None }
+
+    if commands[command]['first']:
+        return False
+
+    commands[command]['first'] = func
+    return True
+
+    logger.debug('protocol.attach(): attached function %s to %s' % (func, command))
+    event.dispatch('OnCommandAddfirst', command, func)
+
+def detach(command, func):
+    '''Detach a function from a command.'''
+
+    global commands
+
+    command = command.upper()
+
+    commands[command]['first'] = None
+    logger.debug('protocol.detach(): detached function %s from %s' % (func, command))
 
 def negotiate_link(conn):
     '''Negotiate the link.'''
@@ -50,14 +98,3 @@ def unload():
 
     mod.protocol_fini()
     logger.info('protocol.unload(): protocol %s unloaded' % mod.__name__)
-
-def call(func, *args):
-    '''Call a function with args.'''
-
-    global mod
-
-    if not hasattr(mod, func):
-        logger.debug('protocol.call(): protocol does not have function %s' % func)
-        return
-
-    mod.func(*args)
