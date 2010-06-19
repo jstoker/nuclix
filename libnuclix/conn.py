@@ -83,10 +83,7 @@ class UplinkConnection(asyncore.dispatcher):
         '''Write the first line in the sendq to the socket.'''
 
         # Grab the first line from the sendq.
-        try:
-            line = self.sendq[-1] + '\r\n'
-        except IndexError:
-            return
+        line = self.sendq[-1] + '\r\n'
 
         # Try to send it.
         num_sent = self.send(line)
