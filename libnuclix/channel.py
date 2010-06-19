@@ -16,7 +16,7 @@ def add(name, ts):
     '''Add the channel to the hash list.'''
 
     if name in var.channels:
-        logger.debug('channel.add(): channel already exists: %s' % name)
+        logger.debug('attempted to add a channel that already exists: %s' % name)
         return
 
     var.channels[name] = { 'ts'           : 0,
@@ -27,13 +27,13 @@ def add(name, ts):
                            'metadata'     : [] }
 
     var.channels[name]['ts'] = ts
-    logger.debug('channel.add(): %s' % name)
+    logger.debug('channel %s created' % name)
 
 def delete(name):
     '''Delete a channel.'''
 
     if name not in var.channels:
-        logger.debug('channel.delete(): got a channel that doesnt exist: %s' % name)
+        logger.debug('got a channel that doesnt exist: %s' % name)
         return
 
     var.channels[name]['ts'] = 0

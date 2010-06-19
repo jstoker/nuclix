@@ -94,15 +94,15 @@ class UplinkConnection(asyncore.dispatcher):
         # If it didn't all send we have to work this out.
         if num_sent == len(line):
             event.dispatch('OnRawSocketWrite', self, line)
-            logger.debug('conn.UplinkConnection().handle_write(): %s <- %s' % (self.server['address'], self.sendq.pop()))
+            logger.debug('%s <- %s' % (self.server['address'], self.sendq.pop()))
         else:
-            logger.warning('conn.UplinkConnection().handle_write(): incomplete write (%d byte%s written instead of %d)' % (num_sent, 's' if num_sent != 1 else '', len(line)))
+            logger.warning('incomplete write to uplink (%d byte%s written instead of %d)' % (num_sent, 's' if num_sent != 1 else '', len(line)))
             self.sendq[-1] = self.sendq[-1][num_sent:]
 
     def handle_connect(self):
         '''Log into the IRC server.'''
 
-        logger.info('conn.UplinkConnection().handle_connect(): connection established')
+        logger.info('connection to uplink established')
 
         self.server['connected'] = True
         protocol.negotiate_link(self)
@@ -112,23 +112,22 @@ class UplinkConnection(asyncore.dispatcher):
 
         asyncore.dispatcher.close(self)
 
-        logger.info('conn.UplinkConnection().handle_close(): connection lost')
+        logger.info('connection to uplink lost')
         self.server['connected'] = False
 
         if self.server['recontime']:
-            logger.info('conn.UplinkConnection().handle_close(): reconnecting in %d second%s' % (self.server['recontime'], 's' if self.server['recontime'] != 1 else ''))
+            logger.info('reconnecting to uplink in %d second%s' % (self.server['recontime'], 's' if self.server['recontime'] != 1 else ''))
             timer.add('uplink.reconnect', True, reinit, self.server['recontime'], self.server)
 
             event.dispatch('OnReconnect', self.server)
         else:
-            # Log it and exit.
-            logger.info('conn.UplinkConnection().handle_close(): not reconnecting to the uplink, will exit now')
+            # Exit.
             shutdown(os.EX_SOFTWARE, 'no reconnection to uplink, therefore we dont need to hang around')
 
     def handle_error(self):
         '''Record a normal traceback and exit.'''
 
-        logger.critical('conn.UplinkConnection().handle_error(): asyncore failure (BUG)')
+        logger.critical('asyncore failure (BUG)')
 
         try:
             traceback_file = var.conf.get('options', 'traceback_file')[0]
@@ -162,7 +161,7 @@ class UplinkConnection(asyncore.dispatcher):
             protocol.parse_data(self, line)
 
             event.dispatch('OnRawSocketRead', self, line)
-            logger.debug('conn.report(): %s -> %s' % (self.server['address'], line))
+            logger.debug('%s -> %s' % (self.server['address'], line))
 
 def init():
     '''Connect to the uplink.'''
@@ -196,7 +195,7 @@ def init():
 
     event.dispatch('OnUplinkRecognization', serv)
 
-    logger.info('conn.init(): connecting to %s (%s:%d)' % (serv['id'], serv['address'], serv['port']))
+    logger.info('connecting to %s (%s:%d)' % (serv['id'], serv['address'], serv['port']))
     var.conn = UplinkConnection(serv)
 
     event.dispatch('OnPreConnect', serv)

@@ -37,7 +37,7 @@ class BlockNotFound(Exception):
         self.__err = err
 
         if logger.debug != None:
-            logger.debug('conf.BlockNotFound(): %s' % self.__err)
+            logger.debug('%s' % self.__err)
 
     def __str__(self):
         return self.__err
@@ -50,7 +50,7 @@ class VariableNotFound(Exception):
         self.__err = err
 
         if logger.debug != None:
-            logger.debug('conf.VariableNotFound(): %s' % self.__err)
+            logger.debug('%s' % self.__err)
 
     def __str__(self):
         return self.__err
@@ -63,7 +63,7 @@ class GeneralError(Exception):
         self.__err = err
 
         if logger.debug != None:
-            logger.debug('conf.GeneralError(): %s' % self.__err)
+            logger.debug('%s' % self.__err)
 
     def __str__(self):
         return self.__err
