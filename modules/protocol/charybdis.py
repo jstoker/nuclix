@@ -97,7 +97,7 @@ def on_socket_read(conn, data):
     try:
         origin, cmd, target, message = pattern.match(data).groups()
     except AttributeError:
-        continue
+        pass
 
     # Make an IRC parameter argument vector.
     if target:
