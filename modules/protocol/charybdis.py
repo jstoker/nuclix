@@ -107,7 +107,7 @@ def on_socket_read(conn, data):
 
     if cmd == 'PING':
         m_ping(conn, parv)
-    else if cmd == 'PONG':
+    elif cmd == 'PONG':
         m_pong(conn, parv)
 
 def protocol_init():
