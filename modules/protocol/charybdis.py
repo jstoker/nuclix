@@ -91,24 +91,25 @@ def m_server(conn, parv):
 def on_socket_read(conn, data):
     '''Read data read from the connection.'''
 
-    parv = []
+    for line in data:
+        parv = []
     
-    # Split this crap up with the help of RE.
-    try:
-        origin, cmd, target, message = pattern.match(data).groups()
-    except AttributeError:
-        pass
+        # Split this crap up with the help of RE.
+        try:
+            origin, cmd, target, message = pattern.match(line).groups()
+        except AttributeError:
+            continue
 
-    # Make an IRC parameter argument vector.
-    if target:
-        parv.append(target) 
+        # Make an IRC parameter argument vector.
+        if target:
+            parv.append(target) 
 
-    parv.append(message)
+        parv.append(message)
 
-    if cmd == 'PING':
-        m_ping(conn, parv)
-    elif cmd == 'PONG':
-        m_pong(conn, parv)
+        if cmd == 'PING':
+            m_ping(conn, parv)
+        elif cmd == 'PONG':
+            m_pong(conn, parv)
 
 def protocol_init():
     '''Protocol entry point.'''
