@@ -66,8 +66,9 @@ def negotiate_link(conn):
 def m_ping(conn, parv):
     '''Reply to PING's.'''
 
+    global uses_uid
+
     conn.push(':%s PONG %s %s' % (conn.server['numeric'] if uses_uid else conn.server['services_server'], conn.server['services_server'], parv[0]))
-    return
 
 def m_pong(conn, parv):
     '''Reply to PONG's.'''
@@ -79,7 +80,7 @@ def m_pong(conn, parv):
         return
 
     logger.info('m_pong(): bursting to %s (%d user%s)' % (parv[0], var.servers[parv[0]]['users'], 's' if var.servers[parv[0]]['users'] != 1 else ''))
-    
+
     if conn.server['actual'] == parv[0]:
         return
 
@@ -88,36 +89,16 @@ def m_server(conn, parv):
 
     logger.info('m_server(): new server: %s' % parv[0])
 
-def on_socket_read(conn, data):
-    '''Read data read from the connection.'''
-
-    global pattern
-
-    parv = []
-
-    # Split this crap up with the help of RE.
-    try:
-        origin, cmd, target, message = pattern.match(data).groups()
-    except AttributeError:
-        pass
-
-    # Make an IRC parameter argument vector.
-    if target:
-        parv.append(target) 
-
-    parv.append(message)
-
-    if cmd == 'PING':
-        m_ping(conn, parv)
-    elif cmd == 'PONG':
-        m_pong(conn, parv)
-
 def protocol_init():
     '''Protocol entry point.'''
 
-    event.attach('OnRawSocketRead', on_socket_read)
+    protocol.attach('PING', m_ping)
+    protocol.attach('PONG', m_pong)
+    protocol.attach('SERVER', m_server)
 
 def protocol_fini():
     '''Protocol exit point.'''
 
-    event.detach('OnRawSocketRead', on_socket_read)
+    protocol.detach('PING', m_ping)
+    protocol.detach('PONG', m_pong)
+    protocol.detach('SERVER', m_server)
