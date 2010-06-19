@@ -13,6 +13,7 @@ from libnuclix import event
 from libnuclix import var
 from libnuclix import server
 from libnuclix import logger
+from libnuclix import protocol
 
 uses_uid = False
 
@@ -63,12 +64,41 @@ def negotiate_link(conn):
     conn.push('SERVER %s 1 :%s' % (conn.server['services_name'], conn.server['services_desc']))
     conn.push('SVINFO %d 3 0 :%d' % (6 if uses_uid else 5, time.time()))
 
+def parse_data(conn, data):
+    '''Parse the incoming server data.'''
+
+    global pattern
+
+    parv = []
+
+    try:
+        origin, command, target, message = pattern.match(data).groups()
+    except AttributeError:
+        pass
+
+    # Make an IRC parameter argument vector.
+    if target:
+        parv.append(target)
+
+    parv.append(message)
+
+    if command == 'PING':
+        m_ping(conn, parv)
+
+    if command == 'PONG':
+        m_pong(conn, parv)
+
+    if command == 'SERVER':
+        m_server(conn, parv)
+
 def m_ping(conn, parv):
     '''Reply to PING's.'''
 
     global uses_uid
 
-    conn.push(':%s PONG %s %s' % (conn.server['numeric'] if uses_uid else conn.server['services_server'], conn.server['services_server'], parv[0]))
+    numeric = var.conf.get('uplink', 'numeric')[0]
+
+    conn.push(':%s PONG %s %s' % (numeric if uses_uid else conn.server['services_name'], conn.server['services_name'], parv[0]))
 
 def m_pong(conn, parv):
     '''Reply to PONG's.'''
@@ -92,13 +122,9 @@ def m_server(conn, parv):
 def protocol_init():
     '''Protocol entry point.'''
 
-    protocol.attach('PING', m_ping)
-    protocol.attach('PONG', m_pong)
-    protocol.attach('SERVER', m_server)
+    pass
 
 def protocol_fini():
     '''Protocol exit point.'''
 
-    protocol.detach('PING', m_ping)
-    protocol.detach('PONG', m_pong)
-    protocol.detach('SERVER', m_server)
+    pass
