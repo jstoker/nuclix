@@ -86,7 +86,6 @@ class UplinkConnection(asyncore.dispatcher):
         try:
             line = self.sendq[-1] + '\r\n'
         except IndexError:
-            # This means there are no lines to send.
             return
 
         # Try to send it.
@@ -153,6 +152,7 @@ class UplinkConnection(asyncore.dispatcher):
         '''Nicer interface to push data onto the sendq stack.'''
 
         self.sendq.appendleft('%s' % text)
+        return
 
     def report(self):
         '''Report new data.'''
