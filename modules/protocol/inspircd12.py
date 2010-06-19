@@ -107,7 +107,7 @@ def m_server(conn, parv):
     global uses_uid
 
     # SERVER zeus.jcs.me.uk iliketurtles 0 001 :zeus.jcs.me.uk inspircd
-    logger.debug('m_server(): new server: %s' % parv[0])
+    logger.debug('new server: %s' % parv[0])
 
     # need to make sure we only do this upon connect, and not upon other servers.
     conn.push(':%s BURST %d' % (numeric, time.time()))
@@ -121,7 +121,7 @@ def m_server(conn, parv):
 def m_squit(conn, parv):
     '''Handle server leavings.'''
 
-    logger.info('m_squit(): server %s leaving from %s' % (parv[0], parv[1])) # parv[1] == the reason.
+    logger.info('server %s leaving from %s' % (parv[0], parv[1])) # parv[1] == the reason.
     server.delete(parv[0])
 
 def m_fjoin(conn, parv):
@@ -148,14 +148,14 @@ def m_ping(conn, parv):
 
 def m_pong(conn, parv):
     '''Reply to PONG's.'''
-
+    # unsure about relevance to inspircd from charybdis.
     if not parv[0]:
         return
 
     if parv[0] not in var.servers:
         return
 
-    logger.info('m_pong(): bursting to %s (%d user%s)' % (parv[0], var.servers[parv[0]]['users'], 's' if var.servers[parv[0]]['users'] != 1 else ''))
+    logger.info('bursting to %s (%d user%s)' % (parv[0], var.servers[parv[0]]['users'], 's' if var.servers[parv[0]]['users'] != 1 else ''))
 
     if conn.server['actual'] == parv[0]:
         return
@@ -166,7 +166,7 @@ def m_uid(conn, parv):
     print parv
 
     if parv >= 9:
-        logger.debug('m_uid(): user connected: %s' % parv[0])
+        logger.debug('user connected: %s' % parv[0])
 
 def protocol_init():
     '''Protocol entry point.'''
