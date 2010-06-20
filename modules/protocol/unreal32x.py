@@ -72,7 +72,12 @@ def parse_data(conn, data):
 
     parv.append(message)
 
+    print parv
+
     if command == 'PING':
+        m_ping(conn, parv)
+
+    if command == '8':
         m_ping(conn, parv)
 
 def m_ping(conn, parv):
