@@ -36,9 +36,6 @@ class BlockNotFound(Exception):
         Exception.__init__(self, err)
         self.__err = err
 
-        if logger.debug != None:
-            logger.debug('%s' % self.__err)
-
     def __str__(self):
         return self.__err
 
@@ -49,9 +46,6 @@ class VariableNotFound(Exception):
         Exception.__init__(self, err)
         self.__err = err
 
-        if logger.debug != None:
-            logger.debug('%s' % self.__err)
-
     def __str__(self):
         return self.__err
 
@@ -61,9 +55,6 @@ class GeneralError(Exception):
     def __init__(self, err):
         Exception.__init__(self, err)
         self.__err = err
-
-        if logger.debug != None:
-            logger.debug('%s' % self.__err)
 
     def __str__(self):
         return self.__err
