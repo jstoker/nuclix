@@ -54,6 +54,33 @@ def negotiate_link(conn):
     conn.push('PROTOCTL TOKEN NICKv2 VHP NICKIP UMODE2 SJOIN SJOIN2 SJ3 NOQUIT TKLEXT')
     conn.push('SERVER %s 1 :%s' % (conn.server['services_name'], conn.server['services_desc']))
 
+def parse_data(conn, data):
+    '''Parse the incoming server data.'''
+
+    global pattern
+
+    parv = []
+
+    try:
+        origin, command, target, message = pattern.match(data).groups()
+    except AttributeError:
+        return
+
+    # Make an IRC parameter argument vector.
+    if target:
+        parv.append(target)
+
+    parv.append(message)
+
+    if command == 'PING':
+        m_ping(conn, parv)
+
+def m_ping(conn, parv):
+    '''Reply to PING's.'''
+
+    conn.push(':%s PONG %s %s' % (conn.server['services_name'], conn.server['services_name'], parv[0]))
+    return
+
 def protocol_init():
     '''Protocol entry point.'''
         
