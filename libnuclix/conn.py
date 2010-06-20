@@ -93,13 +93,13 @@ class UplinkConnection(asyncore.dispatcher):
             event.dispatch('OnRawSocketWrite', self, line)
             logger.debug('%s <- %s' % (self.server['address'], self.sendq.pop()))
         else:
-            logger.warning('incomplete write to uplink (%d byte%s written instead of %d)' % (num_sent, 's' if num_sent != 1 else '', len(line)))
+            logger.warning('incomplete write to %s (%d byte%s written instead of %d)' % (self.server['id'], num_sent, 's' if num_sent != 1 else '', len(line)))
             self.sendq[-1] = self.sendq[-1][num_sent:]
 
     def handle_connect(self):
         '''Log into the IRC server.'''
 
-        logger.info('connection to uplink established')
+        logger.info('connection to %s established' % self.server['id'])
 
         self.server['connected'] = True
         protocol.negotiate_link(self)
@@ -109,17 +109,17 @@ class UplinkConnection(asyncore.dispatcher):
 
         asyncore.dispatcher.close(self)
 
-        logger.info('connection to uplink lost')
+        logger.info('connection to %s lost' % self.server['id'])
         self.server['connected'] = False
 
         if self.server['recontime']:
-            logger.info('reconnecting to uplink in %d second%s' % (self.server['recontime'], 's' if self.server['recontime'] != 1 else ''))
+            logger.info('reconnecting to %s in %d second%s' % (self.server['id'], self.server['recontime'], 's' if self.server['recontime'] != 1 else ''))
             timer.add('uplink.reconnect', True, reinit, self.server['recontime'], self.server)
 
             event.dispatch('OnReconnect', self.server)
         else:
             # Exit.
-            shutdown(os.EX_SOFTWARE, 'no reconnection to uplink, therefore we dont need to hang around')
+            shutdown(os.EX_SOFTWARE, 'no reconnection to %s, therefore we dont need to hang around' % self.server['id'])
 
     def handle_error(self):
         '''Record a normal traceback and exit.'''
