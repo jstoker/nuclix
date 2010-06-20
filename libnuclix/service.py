@@ -31,7 +31,7 @@ def add(name, nick, ident, host, gecos):
     # Now introduce it to the network.
     protocol.introduce_service(var.services[name])
 
-def del(name):
+def delete(name):
     '''Delete a service.'''
 
     if name not in var.services:
