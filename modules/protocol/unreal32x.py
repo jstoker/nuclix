@@ -80,11 +80,22 @@ def parse_data(conn, data):
     if command == '8':
         m_ping(conn, parv)
 
+    if command == 'PONG':
+        m_pong(conn, parv)
+
+    if command == '9':
+        m_pong(conn, parv)
+
 def m_ping(conn, parv):
     '''Reply to PING's.'''
 
     conn.push(':%s PONG %s %s' % (conn.server['services_name'], conn.server['services_name'], parv[0]))
     return
+
+def m_pong(conn, parv):
+    '''Reply to PONG's.'''
+
+    pass
 
 def protocol_init():
     '''Protocol entry point.'''
