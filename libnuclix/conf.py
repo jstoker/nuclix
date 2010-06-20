@@ -71,7 +71,7 @@ class ConfigParser:
 
         logger.info('conf.ConfigParser(): rehashing configuration %s' % 'due to SIGHUP' if on_sighup else '')
 
-        # Make a copy of the old data to compare it to the new data.
+        # XXX: Make a copy of the old data to compare it to the new data.
         self.parse()
 
     def parse(self):
