@@ -53,6 +53,13 @@ def unload(module):
     var.modules_loaded.remove(module)
     event.dispatch('OnModuleUnload', module)
 
+def unload_by_name(mod):
+    '''Unload a module by name.'''
+
+    for i in var.modules_loaded:
+        if i.__name__ == mod:
+            unload(i)
+
 def find(name):
     '''Find a module within the loaded modules list.'''
 
