@@ -14,7 +14,8 @@ def add(name, hops, uplink, sid, desc):
     if name in var.servers:
         logger.debug('attempted to add server %s already exists' % name)
         return
-    elif uplink in var.servers:
+
+    if uplink in var.servers:
         logger.debug('attempted to add server %s originating from %s that already exists' % (name, uplink['name']))
         return
 
