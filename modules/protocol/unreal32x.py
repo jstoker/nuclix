@@ -47,6 +47,13 @@ pattern = r'''
 #     ^(?:\:([^\s]+)\s)?(\w+)\s(?:([^\s\:]+)\s)?(?:\:?(.*))?$
 pattern = re.compile(pattern, re.VERBOSE)
 
+def negotiate_link(conn):
+    '''Send the linking data.'''
+
+    conn.push('PASS %s' % conn.server['password'])
+    conn.push('PROTOCTL TOKEN NICKv2 VHP NICKIP UMODE2 SJOIN SJOIN2 SJ3 NOQUIT TKLEXT')
+    conn.push('SERVER %s 1 :%s' % (conn.server['services_name'], conn.server['services_desc']))
+
 def protocol_init():
     '''Protocol entry point.'''
         
