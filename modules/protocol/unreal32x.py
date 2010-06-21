@@ -86,6 +86,31 @@ def parse_data(conn, data):
     if command == '9':
         m_pong(conn, parv)
 
+    if command == 'AWAY':
+        m_away(conn, origin, parv)
+
+    if command == '6':
+        m_away(conn, origin, parv)
+
+def m_away(conn, origin, parv):
+    '''A user went away.'''
+
+    try:
+        var.users[origin]
+    except KeyError:
+        logger.debug('got a user to be marked away/unaway, but doesnt exist: %s' % origin)
+        return
+
+    message = ' '.join(parv[0])
+
+    if message:
+        u['away_message'] = message
+        u['away_ts'] = time.time()
+    else:
+        if u['away_message']:
+            u['away_message'] = None
+            u['away_ts'] = 0
+
 def m_ping(conn, parv):
     '''Reply to PING's.'''
 
