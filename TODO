@@ -1,0 +1,19 @@
+nuclix 0.1a TODO:
+
+Legend = [X] - Done.
+         [ ] - No status.
+         [*] - Unsure whether to do/not do this; talk with developers.
+         [+] - In progress.
+
+[ ] - Use C whenever possible (this does not include compiling C code, the 'ctypes' module may work)
+[+] - User management
+[+] - Channel management
+[+] - Service managment
+[+] - Server management
+
+[+] - Support various IRCd's.
+
+      [+] - Unreal 3.2.x
+      [+] - Charybdis
+      [ ] - InspIRCd 1.1 (This may be outdated by the time 2.0 Final is released)
+      [ ] - InspIRCd 1.2/2.0
