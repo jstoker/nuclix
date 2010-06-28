@@ -44,7 +44,7 @@ def unload(module):
     '''Unload a module.'''
 
     if module not in var.modules_loaded:
-        logger.warning('%s is not in the loaded modules list' % module)
+        logger.warning('attempted to unload module %s, but that is not in the loaded modules list' % module)
         return
 
     module.module_fini()
