@@ -107,9 +107,8 @@ def m_away(conn, origin, parv):
         u['away_message'] = message
         u['away_ts'] = time.time()
     else:
-        if u['away_message']:
-            u['away_message'] = None
-            u['away_ts'] = 0
+        u['away_message'] = None
+        u['away_ts'] = 0
 
 def m_ping(conn, parv):
     '''Reply to PING's.'''
