@@ -139,7 +139,7 @@ def m_squit(conn, parv):
     '''Handle server leavings.'''
 
     logger.info('server %s leaving from %s' % (parv[0], parv[1]))
-    server.delte(parv[0])
+    server.delete(parv[0])
 
 def m_sjoin(conn, parv):
     '''Channel syncing.'''
