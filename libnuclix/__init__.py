@@ -4,7 +4,7 @@
 
 '''libnuclix initialization code.'''
 
-__all___ = ['channel',
+__all__ = ['channel',
             'conf',
             'event',
             'logger',
